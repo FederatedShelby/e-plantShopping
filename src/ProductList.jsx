@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./ProductList.css";
 
@@ -12,6 +12,9 @@ function ProductList() {
   const [showCart, setShowCart] = useState(false);
   const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
   const [addedToCart, setAddedToCart] = useState({}); // State to track which products are added to cart
+
+  const cart = useSelector(state => state.cart);
+  const cartQuantityCount = cart.items.reduce((acc, curr) => acc + curr.quantity, 0).toString();
 
   const handleAddToCart = (product) => {
     dispatch(addItem(product));
@@ -322,7 +325,7 @@ function ProductList() {
             </a>
           </div>
           <div>
-            {" "}
+            <span className="cart_quantity_count">{cartQuantityCount}</span>
             <a href="#" onClick={(e) => handleCartClick(e)} style={styleA}>
               <h1 className="cart">
                 <svg
