@@ -13,8 +13,21 @@ function ProductList() {
   const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
   const [addedToCart, setAddedToCart] = useState({}); // State to track which products are added to cart
 
-  const cart = useSelector(state => state.cart);
-  const cartQuantityCount = cart.items.reduce((acc, curr) => acc + curr.quantity, 0).toString();
+  const cart = useSelector((state) => state.cart);
+  const cartQuantityCount = cart.items
+    .reduce((acc, curr) => acc + curr.quantity, 0)
+    .toString();
+
+  const isAddedToCart = (plantName) => {
+    return (
+      cartQuantityCount > 0 &&
+      cart.items.find((item) => item.name === plantName)
+    );
+  };
+
+  const getAddToCartButtonText = (plantName) => {
+    return isAddedToCart(plantName) ? "Added to Cart" : "Add to Cart";
+  };
 
   const handleAddToCart = (product) => {
     dispatch(addItem(product));
@@ -374,10 +387,11 @@ function ProductList() {
                       Cost: <strong>{plant.cost}</strong>
                     </p>
                     <button
-                      className="product-button"
+                      className={`product-button${isAddedToCart(plant.name) ? '--disabled' : ''}`}
                       onClick={() => handleAddToCart(plant)}
+                      disabled={isAddedToCart(plant.name)}
                     >
-                      Add to Cart
+                      {getAddToCartButtonText(plant.name)}
                     </button>
                   </div>
                 ))}
