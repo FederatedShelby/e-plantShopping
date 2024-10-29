@@ -367,6 +367,9 @@ function ProductList() {
                     />
                     <div className="product-title">{plant.name}</div>
                     <p>{plant.description}</p>
+                    <p>
+                      Cost: <strong>{plant.cost}</strong>
+                    </p>
                     <button
                       className="product-button"
                       onClick={() => handleAddToCart(plant)}
