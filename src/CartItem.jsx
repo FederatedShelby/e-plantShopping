@@ -8,7 +8,12 @@ const CartItem = ({ onContinueShopping }) => {
   const dispatch = useDispatch();
 
   // Calculate total amount for all products in the cart
-  const calculateTotalAmount = () => {};
+  const calculateTotalAmount = () => {
+    return cart.reduce(
+      (acc, curr) => acc + Number(curr.cost.slice(1)) * curr.quantity,
+      0
+    );
+  };
 
   const handleContinueShopping = (e) => {};
 
